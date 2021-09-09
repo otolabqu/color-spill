@@ -7,7 +7,7 @@ function sleep(ms) {
 }
     var canvas2 = document.getElementById('canvas2');
     var ctx2 = canvas2.getContext('2d');
-
+    let DELTA = 13
     ctx2.fillStyle ="#ffffff"
     ctx2.fillRect(0,0,100,100)
  
@@ -20,12 +20,45 @@ function sleep(ms) {
             if (dat[i] === undefined) {
                 break
             }
-            dat[i] = Math.max(dat[i]-3, 0)
+            dat[i] = Math.max(dat[i]-DELTA, 0)
     }
         ctx2.putImageData(im, 50-d, 50-d)  
     }
 
     }
     
+    async function hej2() {
+        await sleep(3000)
+        for (let d = 10; d<30; d+=1) {
+        await sleep(100)
+        let im = ctx2.getImageData(80-d, 70-d, 2*d, 2*d);
+        let dat = im.data
+        for (let i = 1;; i+=4) {
+            if (dat[i] === undefined) {
+                break
+            }
+            dat[i] = Math.max(dat[i]-DELTA, 0)
+    }
+        ctx2.putImageData(im, 80-d, 70-d)  
+    }
+    }
+
+    async function hej3() {
+        await sleep(5000)
+        for (let d = 10; d<30; d+=1) {
+        await sleep(100)
+        let im = ctx2.getImageData(60-d, 80-d, 2*d, 2*d);
+        let dat = im.data
+        for (let i = 2;; i+=4) {
+            if (dat[i] === undefined) {
+                break
+            }
+            dat[i] = Math.max(dat[i]-DELTA, 0)
+    }
+        ctx2.putImageData(im, 60-d, 80-d)  
+    }
+    }
     hej()
+    hej2()
+    hej3()
 </script>
