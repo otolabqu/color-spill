@@ -1,62 +1,31 @@
 <canvas id="canvas2" width="100" height="100" style="image-rendering: pixelated;"></canvas>
 
-
 <script>
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
     var canvas2 = document.getElementById('canvas2');
     var ctx2 = canvas2.getContext('2d');
 
     ctx2.fillStyle ="#ffffff"
     ctx2.fillRect(0,0,100,100)
-    let d = 1
-
-    
-    let im = ctx2.getImageData(50-10, 50-10, 20, 20);
-    let dat = im.data
-    for (let i = 0;; i+=4) {
-            if (dat[i] === undefined) {
-                break
-            }
-            dat[i] = Math.max(dat[i]-30, 0)
-    }
-    ctx2.putImageData(im, 50-10, 50-10)    
-
-
-     im = ctx2.getImageData(50-20, 50-20, 40, 40);
-     dat = im.data
-    for (let i = 0;; i+=4) {
-            if (dat[i] === undefined) {
-                break
-            }
-            dat[i] = Math.max(dat[i]-30, 0)
-    }
-    ctx2.putImageData(im, 50-20, 50-20)   
-
-     im = ctx2.getImageData(50-30, 50-30, 60, 60);
-     dat = im.data
-    for (let i = 0;; i+=4) {
-            if (dat[i] === undefined) {
-                break
-            }
-            dat[i] = Math.max(dat[i]-30, 0)
-    }
-    ctx2.putImageData(im, 50-30, 50-30)   
-  /*  setInterval(() => {
+ 
+    async function hej() {
+        for (let d = 10; d<40; d+=1) {
+        await sleep(100)
         let im = ctx2.getImageData(50-d, 50-d, 2*d, 2*d);
         let dat = im.data
-        d = Math.min(d*2, 25)
         for (let i = 0;; i+=4) {
             if (dat[i] === undefined) {
                 break
             }
-            dat[i] = Math.max(dat[i]-30, 0)
-        }
-        ctx2.putImageData(im, 50-d, 50-d)
-    }, 1000)
-    */
+            dat[i] = Math.max(dat[i]-3, 0)
+    }
+        ctx2.putImageData(im, 50-d, 50-d)  
+    }
 
+    }
+    
+    hej()
 </script>
