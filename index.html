@@ -2,6 +2,14 @@
 
 <script>
 
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function max0(x) {
+    return Math.max(0, x)
+}
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -12,9 +20,14 @@ function sleep(ms) {
     ctx2.fillRect(0,0,100,100)
  
     async function hej() {
-        for (let d = 10; d<40; d+=1) {
+        let xstart = randInt(0,99)
+        let ystart = randInt(0,99)
+        let dmax = randInt(20,50)
+
+        console.log("xstart:  " + xstart + " ystart:" + ystart + " dmax:" + dmax)
+        for (let d = 10; d<dmax; d+=1) {
         await sleep(100)
-        let im = ctx2.getImageData(50-d, 50-d, 2*d, 2*d);
+        let im = ctx2.getImageData(max0(xstart-d), max0(ystart-d), 2*d, 2*d);
         let dat = im.data
         for (let i = 0;; i+=4) {
             if (dat[i] === undefined) {
@@ -22,43 +35,11 @@ function sleep(ms) {
             }
             dat[i] = Math.max(dat[i]-DELTA, 0)
     }
-        ctx2.putImageData(im, 50-d, 50-d)  
+        ctx2.putImageData(im, max0(xstart-d), max0(ystart-d))  
     }
 
     }
     
-    async function hej2() {
-        await sleep(3000)
-        for (let d = 10; d<30; d+=1) {
-        await sleep(100)
-        let im = ctx2.getImageData(80-d, 70-d, 2*d, 2*d);
-        let dat = im.data
-        for (let i = 1;; i+=4) {
-            if (dat[i] === undefined) {
-                break
-            }
-            dat[i] = Math.max(dat[i]-DELTA, 0)
-    }
-        ctx2.putImageData(im, 80-d, 70-d)  
-    }
-    }
-
-    async function hej3() {
-        await sleep(5000)
-        for (let d = 10; d<30; d+=1) {
-        await sleep(100)
-        let im = ctx2.getImageData(60-d, 80-d, 2*d, 2*d);
-        let dat = im.data
-        for (let i = 2;; i+=4) {
-            if (dat[i] === undefined) {
-                break
-            }
-            dat[i] = Math.max(dat[i]-DELTA, 0)
-    }
-        ctx2.putImageData(im, 60-d, 80-d)  
-    }
-    }
     hej()
-    hej2()
-    hej3()
+    
 </script>
