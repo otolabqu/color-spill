@@ -2,44 +2,55 @@
 
 <script>
 
-function randInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+    function randInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
-function max0(x) {
-    return Math.max(0, x)
-}
+    function max0(x) {
+        return Math.max(0, x)
+    }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
     var canvas2 = document.getElementById('canvas2');
     var ctx2 = canvas2.getContext('2d');
     let DELTA = 13
-    ctx2.fillStyle ="#ffffff"
-    ctx2.fillRect(0,0,100,100)
- 
+    ctx2.fillStyle = "#000000"
+    ctx2.fillRect(0, 0, 100, 100)
+
     async function hej() {
-        let xstart = randInt(0,99)
-        let ystart = randInt(0,99)
-        let dmax = randInt(20,50)
 
-        console.log("xstart:  " + xstart + " ystart:" + ystart + " dmax:" + dmax)
-        for (let d = 10; d<dmax; d+=1) {
-        await sleep(100)
-        let im = ctx2.getImageData(max0(xstart-d), max0(ystart-d), 2*d, 2*d);
-        let dat = im.data
-        for (let i = 0;; i+=4) {
-            if (dat[i] === undefined) {
-                break
+        let xstart = randInt(0, 99)
+        let ystart = randInt(0, 99)
+        let dmax = randInt(20, 50)
+        let color = randInt(0, 2)
+        DELTA = Math.floor(255 / (dmax - 10))
+        let addsub = Math.random() < 0.5 ? -1: 1
+        console.log("xstart:  " + xstart + " ystart:" + ystart + " dmax:" + dmax + " color:" + color + " DELTA:" + DELTA + "addsub:" + addsub)
+        for (let d = 10; d < dmax; d += 1) {
+            await sleep(100)
+            let im = ctx2.getImageData(max0(xstart - d), max0(ystart - d), 2 * d, 2 * d);
+            let dat = im.data
+            for (let i = color; ; i += 4) {
+                if (dat[i] === undefined) {
+                    break
+                }
+                dat[i] = Math.max(dat[i] - DELTA*addsub, 0)
             }
-            dat[i] = Math.max(dat[i]-DELTA, 0)
-    }
-        ctx2.putImageData(im, max0(xstart-d), max0(ystart-d))  
-    }
+            ctx2.putImageData(im, max0(xstart - d), max0(ystart - d))
+        }
 
     }
+
+    async function start() {
+        for (let n=0; n<50; n++) {
+            
+            hej()
+            await sleep(5000)
+        }
+    }
     
-    hej()
-    
+    start()
+
 </script>
