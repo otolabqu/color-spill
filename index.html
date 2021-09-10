@@ -27,16 +27,18 @@
         let color = randInt(0, 2)
         DELTA = Math.floor(255 / (dmax - 10))
         let addsub = Math.random() < 0.5 ? -1: 1
-        console.log("xstart:  " + xstart + " ystart:" + ystart + " dmax:" + dmax + " color:" + color + " DELTA:" + DELTA + "addsub:" + addsub)
+        let addsubword = ["removing", "", "adding"]
+        let colorword = ["red", "green", "blue"]
+        console.log(addsubword[addsub+1] + " " + colorword[color] + " xstart:  " + xstart + " ystart:" + ystart + " dmax:" + dmax + " color:" + color + " DELTA:" + DELTA + "addsub:" + addsub)
         for (let d = 10; d < dmax; d += 1) {
-            await sleep(100)
+            await sleep(50)
             let im = ctx2.getImageData(max0(xstart - d), max0(ystart - d), 2 * d, 2 * d);
             let dat = im.data
             for (let i = color; ; i += 4) {
                 if (dat[i] === undefined) {
                     break
                 }
-                dat[i] = Math.max(dat[i] - DELTA*addsub, 0)
+                dat[i] = Math.max(dat[i] + DELTA*addsub, 0)
             }
             ctx2.putImageData(im, max0(xstart - d), max0(ystart - d))
         }
@@ -44,10 +46,10 @@
     }
 
     async function start() {
-        for (let n=0; n<50; n++) {
+        while(true) {
             
-            hej()
-            await sleep(5000)
+            await hej()
+            
         }
     }
     
